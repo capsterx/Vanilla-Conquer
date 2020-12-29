@@ -410,10 +410,16 @@ public:
     **	Constructors, Destructors, and overloaded operators.
     */
     static void* operator new(size_t size);
+    static void* operator new(size_t, void* ptr)
+    {
+        return (ptr);
+    };
     static void operator delete(void* ptr);
     HouseClass(void)
         : Class(0){};
     HouseClass(HousesType house);
+    HouseClass(NoInitClass const&)
+        : Class(this->Class){};
     ~HouseClass(void);
     operator HousesType(void) const;
 
@@ -507,8 +513,6 @@ public:
     static void Write_INI(char* buffer);
     static void Read_Flag_INI(char* buffer);
     static void Write_Flag_INI(char* buffer);
-    bool Load(FileClass& file);
-    bool Save(FileClass& file);
     void Code_Pointers(void);
     void Decode_Pointers(void);
 
@@ -911,6 +915,7 @@ public:
         BuildChoiceClass(UrgencyType u, StructType s)
             : Urgency(u)
             , Structure(s){};
+        BuildChoiceClass(NoInitClass const&){};
         int Save(FileClass&) const
         {
             return (true);
