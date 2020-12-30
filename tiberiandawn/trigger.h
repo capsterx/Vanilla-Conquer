@@ -123,6 +123,8 @@ public:
     }
     ~TriggerClass(void);
 
+    void Load();
+
     /*
     **	Initialization: clears all triggers in preparation for new scenario
     */

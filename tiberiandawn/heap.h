@@ -271,6 +271,17 @@ template <class T> int TFixedIHeapClass<T>::Save(FileClass& file)
     return (true);
 }
 
+
+template<class T>
+auto Load_Object(T * ptr) -> decltype(ptr->Load())
+{
+  return ptr->Load();
+}
+
+inline void Load_Object(...)
+{
+}
+
 /***********************************************************************************************
  * TFixedIHeapClass::Load -- Loads all active objects                                          *
  *                                                                                             *
@@ -328,6 +339,7 @@ template <class T> int TFixedIHeapClass<T>::Load(FileClass& file)
         */
         file.Read(ptr, sizeof(T));
         new (ptr) T(NoInitClass());
+        Load_Object(ptr);
     }
 
     return (true);
